@@ -65,14 +65,14 @@ def retest(testloader, model, use_cuda, criterion, epoch, RESUME):
 
     # Save checkpoint.
     if epoch % 10 == 0:
-        torch.save(model.state_dict(), 'checkpoint/' + str(RESUME + int(epoch / 10)) + '.pt')
-        with open('result/result.txt', 'a') as f:
+        torch.save(model.state_dict(), '/content/drive/MyDrive/checkpoint/' + str(RESUME + int(epoch / 10)) + '.pth')
+        with open('/content/pytorch-CAM/result/train_acc.txt', 'w') as f:
             f.write(result)
         f.close()
 
-    with open('result/test_acc.txt', 'a') as f:
+    with open('/content/pytorch-CAM/result/test_acc.txt', 'w') as f:
         f.write(str(test_acc))
     f.close()
-    with open('result/test_loss.txt', 'a') as f:
+    with open('/content/pytorch-CAM/result/test_loss.txt', 'w') as f:
         f.write(str(test_loss))
     f.close()
