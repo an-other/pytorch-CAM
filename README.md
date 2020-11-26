@@ -1,8 +1,8 @@
 # update
 I change the code from original version for runing on my colab.
 
-1.the address
-2.build a new dataset from trian.zip instead of using ImageFolder 
+ - the address
+ - build a new dataset from trian.zip instead of using ImageFolder 
 
 # pytorch-CAM
 This repository is an unofficial version of Class Activation Mapping written in PyTorch.
