@@ -25,7 +25,7 @@ PRETRAINED      = 1
 BATCH_SIZE      = 32
 IMG_SIZE        = 224
 LEARNING_RATE   = 0.01
-EPOCH           = 1
+EPOCH           = 2
 
 #build datasets
 DIR_TRAIN = "/content/pytorch-CAM/train/"
@@ -95,7 +95,8 @@ classes = {0: 'cat', 1: 'dog'}
 
 # fine tuning
 if PRETRAINED:
-    net = inception_v3(pretrained=PRETRAINED)
+    net = inception_v3(pretrained=False)
+    net.load_state_dict(torch.load('/content/drive/MyDrive/inceptionv3.pth'))   #input your pretrained net
     for param in net.parameters():
         param.requires_grad = False
     net.fc = torch.nn.Linear(2048, 2)
