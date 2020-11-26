@@ -110,7 +110,7 @@ net.cuda()
 # load checkpoint
 if RESUME != 0:
     print("===> Resuming from checkpoint.")
-    assert os.path.isfile('/content/drive/MyDrive/checkpoint/'+ str(RESUME) + '.pth'), 'Error: no checkpoint found!'
+    assert os.path.isfile('/content/drive/MyDrive/checkpoint/' + 'cam_inception' + str(RESUME) + '.pth'), 'Error: no checkpoint found!'
     net.load_state_dict(torch.load('checkpoint/' + str(RESUME) + '.pth'))
 
 
