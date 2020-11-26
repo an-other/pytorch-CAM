@@ -97,6 +97,7 @@ classes = {0: 'cat', 1: 'dog'}
 if PRETRAINED:
     net = inception_v3(pretrained=False)
     net.load_state_dict(torch.load('/content/drive/MyDrive/inceptionv3.pth'))   #input your pretrained net
+    print('load model successful\n')
     for param in net.parameters():
         param.requires_grad = False
     net.fc = torch.nn.Linear(2048, 2)
