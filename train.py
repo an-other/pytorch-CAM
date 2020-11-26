@@ -35,10 +35,10 @@ def retrain(trainloader, model, use_cuda, epoch, criterion, optimizer):
     print()
     print('Train Epoch: {}\tAverage Loss: {:.3f}\tAverage Accuracy: {:.3f}%'.format(epoch, loss_avg, acc_avg))
 
-    with open('result/train_acc.txt', 'a') as f:
+    with open('/content/drive/MyDrive/cam/train_acc.txt', 'a') as f:
         f.write(str(acc_avg))
     f.close()
-    with open('result/train_loss.txt', 'a') as f:
+    with open('/content/drive/MyDrive/cam/train_loss.txt', 'a') as f:
         f.write(str(loss_avg))
     f.close()
 
@@ -64,15 +64,15 @@ def retest(testloader, model, use_cuda, criterion, epoch, RESUME):
     print(result)
 
     # Save checkpoint.
-    if epoch % 10 == 0:
-        torch.save(model.state_dict(), '/content/drive/MyDrive/checkpoint/' + str(RESUME + int(epoch / 10)) + '.pth')
-        with open('/content/pytorch-CAM/result/train_acc.txt', 'w') as f:
+    if epoch % 2 == 0:
+        torch.save(model.state_dict(), '/content/drive/MyDrive/checkpoint/' + 'cam_inception' +str(RESUME + int(epoch / 10)) + '.pth')
+        with open('/content/pytorch-CAM/result/train_acc.txt', 'a') as f:
             f.write(result)
         f.close()
 
-    with open('/content/pytorch-CAM/result/test_acc.txt', 'w') as f:
+    with open('/content/pytorch-CAM/result/test_acc.txt', 'a') as f:
         f.write(str(test_acc))
     f.close()
-    with open('/content/pytorch-CAM/result/test_loss.txt', 'w') as f:
+    with open('/content/pytorch-CAM/result/test_loss.txt', 'a') as f:
         f.write(str(test_loss))
     f.close()
