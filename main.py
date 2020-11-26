@@ -90,7 +90,7 @@ testloader = DataLoader(test_data, batch_size=BATCH_SIZE, shuffle=False, num_wor
 
 
 # class
-classes = {0: 'cat', 1: 'dog'}
+classes = {0: 'dog', 1: 'cat'}
 
 
 # fine tuning
