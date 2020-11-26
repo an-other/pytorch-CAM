@@ -7,23 +7,54 @@ from update import *
 from data import *
 from train import *
 import torch, os
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader,Dataset
 from torchvision import datasets, transforms
 from inception import inception_v3
+from PIL import Image
+import random
 
 
 # functions
 CAM             = 1
 USE_CUDA        = 1
 RESUME          = 0
-PRETRAINED      = 0
+PRETRAINED      = 1
 
 
 # hyperparameters
 BATCH_SIZE      = 32
 IMG_SIZE        = 224
 LEARNING_RATE   = 0.01
-EPOCH           = 0
+EPOCH           = 1
+
+#build datasets
+DIR_TRAIN = "/content/pytorch-CAM/train/"
+DIR_TEST = "/content/pytorch-CAM/test1/"
+class_to_int={'dog':0,'cat':1}
+
+
+
+class catdogDataset(Dataset):
+	def __init__(self,imgs,class_to_int,transform=None):
+		super(Dataset,self).__init__()
+    
+		self.imgs=imgs
+    
+		self.class_to_int=class_to_int
+		self.transform=transform
+		
+	def __getitem__(self,idx):
+		img_name=self.imgs[idx]
+		img=Image.open(DIR_TRAIN+img_name)
+		img=self.transform(img)
+		
+    
+		label=class_to_int[img_name.split('.')[0]]
+		label=torch.tensor(label,dtype=torch.long)
+		return img,label
+    	
+	def __len__(self):
+		return len(self.imgs)
 
 
 # prepare data
@@ -46,10 +77,15 @@ transform_test = transforms.Compose([
     normalize
 ])
 
-train_data = datasets.ImageFolder('kaggle/train/', transform=transform_train)
+imgs=os.listdir(DIR_TRAIN)
+random.shuffle(imgs)
+train_data=catdogDataset(imgs[:int(len(imgs)*0.9)],class_to_int,transform_train)
+test_data=catdogDataset(imgs[int(len(imgs)*0.9):],class_to_int,transform_test)
+
+#train_data = datasets.ImageFolder('kaggle/working/train/', transform=transform_train)
 trainloader = DataLoader(train_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
 
-test_data = datasets.ImageFolder('kaggle/test/', transform=transform_test)
+#test_data = datasets.ImageFolder('kaggle/working/test1/', transform=transform_test)
 testloader = DataLoader(test_data, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
 
 
@@ -73,8 +109,8 @@ net.cuda()
 # load checkpoint
 if RESUME != 0:
     print("===> Resuming from checkpoint.")
-    assert os.path.isfile('checkpoint/'+ str(RESUME) + '.pt'), 'Error: no checkpoint found!'
-    net.load_state_dict(torch.load('checkpoint/' + str(RESUME) + '.pt'))
+    assert os.path.isfile('/content/drive/MyDrive/checkpoint/'+ str(RESUME) + '.pth'), 'Error: no checkpoint found!'
+    net.load_state_dict(torch.load('checkpoint/' + str(RESUME) + '.pth'))
 
 
 # retrain
