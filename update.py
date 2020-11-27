@@ -11,11 +11,14 @@ def returnCAM(feature_conv, weight_softmax, class_idx):
     bz, nc, h, w = feature_conv.shape
     output_cam = []
     for idx in class_idx:
-        cam = weight_softmax[class_idx].dot(feature_conv.reshape((nc, h*w)))
+        cam = weight_softmax[idx].unsqueeze(1)*(feature_conv.reshape((nc, h*w)))
+        cam=torch.sum(cam,dim=0)
+        #print(cam.shape)
         cam = cam.reshape(h, w)
-        cam = cam - np.min(cam)
-        cam_img = cam / np.max(cam)
-        cam_img = np.uint8(255 * cam_img)
+        print(cam.shape)
+        cam = cam - torch.min(cam)
+        cam_img = cam / torch.max(cam)
+        cam_img = np.uint8(255 * cam_img.detach())
         output_cam.append(cv2.resize(cam_img, size_upsample))
     return output_cam
 
