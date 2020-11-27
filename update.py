@@ -55,3 +55,4 @@ def get_cam(net, features_blobs, img_pil, classes, root_img):
     heatmap = cv2.applyColorMap(CAM, cv2.COLORMAP_JET)
     result = heatmap * 0.3 + img * 0.5
     cv2.imwrite('cam.jpg', result)
+    print('cam finish')
