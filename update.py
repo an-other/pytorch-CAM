@@ -37,7 +37,7 @@ def get_cam(net, features_blobs, img_pil, classes, root_img):
     ])
 
     img_tensor = preprocess(img_pil)
-    img_variable = Variable(img_tensor.unsqueeze(0)).cuda()
+    img_variable = Variable(img_tensor.unsqueeze(0))
     logit = net(img_variable)
 
     h_x = F.softmax(logit, dim=1).data.squeeze()
