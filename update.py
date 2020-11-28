@@ -24,7 +24,7 @@ def returnCAM(feature_conv, weight_softmax, class_idx):
 
 def get_cam(net, features_blobs, img_pil, classes, root_img):
     params = list(net.parameters())
-    weight_softmax = np.squeeze(params[-2].data.cpu().numpy())
+    weight_softmax = params[-2]
 
     normalize = transforms.Normalize(
         mean=[0.485, 0.456, 0.406],
