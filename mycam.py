@@ -42,7 +42,7 @@ def get_cam(net,features,img,classes,root_img):
 	res=F.softmax(y,dim=1).squeeze()    # res is a vector
 	prob,index=torch.sort(res,0,descending=True)
 	
-	line='{:.3f}->{}'.format(prob[0],classes[index[0]])
+	line='{:.3f}->{}'.format(prob[0],classes[index[0].item()])  #tensor can't be key of dict
 	print(line)
 	
 	weight=list(net.parameters())[-2][class_index]
