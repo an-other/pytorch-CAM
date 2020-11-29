@@ -46,7 +46,7 @@ def get_cam(net,features,img,classes,root_img):
 	print(line)
 	
 	weight=list(net.parameters())[-2][class_index]
-	cam_img=returncam(weight,features)
+	cam_img=returncam(weight,features[0])
 	
 	img=cv2.imread(root_img)
 	h,w,_=img.shape
