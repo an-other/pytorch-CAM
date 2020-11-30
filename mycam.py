@@ -12,8 +12,8 @@ def returncam(weight,features):
 	assert(len(cam.shape)==2),'Error:wrong shape'
 	target_size=(256,256)
 	cam=cam-torch.min(cam)
-        cam_img=cam/torch.max(cam)
-        cam_img=np.uint8(255*cam_img.detach())
+	cam_img=cam/torch.max(cam)
+	cam_img=np.uint8(255*cam_img.detach())
 	cam_img=cv2.resize(cam_img,target_size)
 	return cam_img
 	
