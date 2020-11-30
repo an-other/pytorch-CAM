@@ -48,7 +48,7 @@ def get_cam(net,features,img,classes,root_img):
 	
 	img=cv2.imread(root_img)
 	h,w,_=img.shape
-	cam_img=cv2.resize(cam_img,(h,w))
+	cam_img=cv2.resize(cam_img,(w,h))
 	heatmap=cv2.applyColorMap(cam_img,cv2.COLORMAP_JET)
 	res=heatmap*0.4+img*0.6
 	cv2.imwrite('resultcam.jpg',res)
